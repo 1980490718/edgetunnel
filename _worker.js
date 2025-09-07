@@ -3332,21 +3332,22 @@ async function bestIP(request, env, txt = 'ADD.txt') {
                 response = await fetch('https://www.cloudflare.com/ips-v4/');
             }
 
-            const text = response.ok ? await response.text() : `173.245.48.0/20
-103.21.244.0/22
-103.22.200.0/22
-103.31.4.0/22
-141.101.64.0/18
-108.162.192.0/18
-190.93.240.0/20
-188.114.96.0/20
-197.234.240.0/22
-198.41.128.0/17
-162.158.0.0/15
-104.16.0.0/13
-104.24.0.0/14
-172.64.0.0/13
-131.0.72.0/22`;
+            const text = response.ok ? await response.text() : 
+            `173.245.48.0/20
+            103.21.244.0/22
+            103.22.200.0/22
+            103.31.4.0/22
+            141.101.64.0/18
+            108.162.192.0/18
+            190.93.240.0/20
+            188.114.96.0/20
+            197.234.240.0/22
+            198.41.128.0/17
+            162.158.0.0/15
+            104.16.0.0/13
+            104.24.0.0/14
+            172.64.0.0/13
+            131.0.72.0/22`;
             const cidrs = text.split('\n').filter(line => line.trim() && !line.startsWith('#'));
 
             const ips = new Set(); // 使用Set去重
@@ -4178,7 +4179,7 @@ async function bestIP(request, env, txt = 'ADD.txt') {
                 return;
             }
             
-            const displayCount = showingAll ? originalIPs.length : Math.min(originalIPs.length, 16);
+            const displayCount = showingAll ? originalIPs.length : Math.min(originalIPs.length, 60);
             const displayIPs = originalIPs.slice(0, displayCount);
             
             // 更新显示信息
@@ -4280,7 +4281,7 @@ async function bestIP(request, env, txt = 'ADD.txt') {
             
             try {
                 // 只保存前16个最优IP
-                const saveCount = Math.min(ipsToSave.length, 16);
+                const saveCount = Math.min(ipsToSave.length, 60);
                 const ips = ipsToSave.slice(0, saveCount).map(result => result.display);
                 
                 const response = await fetch('?action=save', {
@@ -4332,7 +4333,7 @@ async function bestIP(request, env, txt = 'ADD.txt') {
             
             try {
                 // 只追加前16个最优IP
-                const saveCount = Math.min(ipsToAppend.length, 16);
+                const saveCount = Math.min(ipsToAppend.length, 60);
                 const ips = ipsToAppend.slice(0, saveCount).map(result => result.display);
                 
                 const response = await fetch('?action=append', {
@@ -4752,11 +4753,11 @@ async function bestIP(request, env, txt = 'ADD.txt') {
             }
             
             // 确定显示数量
-            const maxDisplayCount = showingAll ? testResults.length : Math.min(testResults.length, 16);
+            const maxDisplayCount = showingAll ? testResults.length : Math.min(testResults.length, 60);
             displayedResults = testResults.slice(0, maxDisplayCount);
             
             // 更新结果计数显示
-            if (testResults.length <= 16) {
+            if (testResults.length <= 60) {
                 resultCount.textContent = '(共测试出 ' + testResults.length + ' 个有效IP)';
                 ipDisplayInfo.textContent = '显示全部 ' + testResults.length + ' 个测试结果';
                 showMoreSection.style.display = 'none';
@@ -4849,14 +4850,14 @@ async function bestIP(request, env, txt = 'ADD.txt') {
             }
             
             // 确定显示数量
-            const maxDisplayCount = showingAll ? displayedResults.length : Math.min(displayedResults.length, 16);
+            const maxDisplayCount = showingAll ? displayedResults.length : Math.min(displayedResults.length, 60);
             const currentResults = displayedResults.slice(0, maxDisplayCount);
             
             // 更新结果计数显示
             const totalCount = testResults.length;
             const filteredCount = displayedResults.length;
             
-            if (filteredCount <= 16) {
+            if (filteredCount <= 60) {
                 resultCount.textContent = '(共测试出 ' + totalCount + ' 个有效IP，筛选出 ' + filteredCount + ' 个)';
                 ipDisplayInfo.textContent = '显示全部 ' + filteredCount + ' 个筛选结果';
                 showMoreSection.style.display = 'none';
